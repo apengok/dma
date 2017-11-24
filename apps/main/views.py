@@ -10,7 +10,12 @@ from . import main
 @main.route('/')
 def index():
     
-    return render_template('index.html')
+    return render_template('index_xyz.html')
+    
+@main.route('/openlayer/')
+def openlayer():
+    
+    return render_template('index_test.html')
     
 @main.route('/wbalance')
 def wbalance():
