@@ -59,31 +59,128 @@
     <script src="{{ url_for('static',filename='assets/jquery-2.2.4.min.js') }} "></script>
     
     <script>
-       var map = new ol.Map({
+       var image = new ol.style.Circle({
+        radius: 5,
+        fill: null,
+        stroke: new ol.style.Stroke({color: 'red', width: 1})
+      });
+
+      var styles = {
+        'Point': new ol.style.Style({
+          image: image
+        }),
+        'LineString': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'green',
+            width: 1
+          })
+        }),
+        'MultiLineString': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'green',
+            width: 1
+          })
+        }),
+        'MultiPoint': new ol.style.Style({
+          image: image
+        }),
+        'MultiPolygon': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'yellow',
+            width: 1
+          }),
+          fill: new ol.style.Fill({
+            color: 'rgba(255, 255, 0, 0.1)'
+          })
+        }),
+        'Polygon': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'blue',
+            lineDash: [4],
+            width: 3
+          }),
+          fill: new ol.style.Fill({
+            color: 'rgba(0, 0, 255, 0.1)'
+          })
+        }),
+        'GeometryCollection': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'magenta',
+            width: 2
+          }),
+          fill: new ol.style.Fill({
+            color: 'magenta'
+          }),
+          image: new ol.style.Circle({
+            radius: 10,
+            fill: null,
+            stroke: new ol.style.Stroke({
+              color: 'magenta'
+            })
+          })
+        }),
+        'Circle': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'red',
+            width: 2
+          }),
+          fill: new ol.style.Fill({
+            color: 'rgba(255,0,0,0.2)'
+          })
+        })
+      };
+
+      var styleFunction = function(feature) {
+        return styles[feature.getGeometry().getType()];
+      };
+
+      var geojsonObject = {
+        'type': 'FeatureCollection',
+        'crs': {
+          'type': 'name',
+          'properties': {
+            'name': 'EPSG:3857'
+          }
+        },
+        'features': [
+      { 
+      "type":"Feature",
+      "geometry":{
+      "type":"LineString","coordinates":[[118.40531307,29.864781271],[118.40584245,29.864784653],[118.40598886,29.864783094],[118.40609166,29.864734194],[118.40640776,29.864583352]],
+      }
+      
+      },
+      { "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40458059,29.864019678],[1180.40456829,290.863954415],[3118.40455666,929.863862537],[6118.40455148,279.863788179],[4118.40474162,529.863769018]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40477419,29.863988754],[118.40458059,29.864019678],[118.4044634,29.864038514],[118.40409404,29.864081229],[118.40402919,29.864142803],[118.40393302,29.864185317]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40450381,29.864189617],[118.40414323,29.864194806]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40453196,29.864242083],[118.40450381,29.864189617],[118.40450062,29.864183788],[118.4044634,29.864038514]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40464475,29.864536733],[118.40430999,29.86453804]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40489032,29.864927834],[118.4045234,29.864923621]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40702605,29.864948829],[118.406576,29.864957234],[118.40615549,29.864968931],[118.40584399,29.86496819],[118.40563235,29.864967738],[118.40494522,29.86496874]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40657714,29.864964438],[118.40659087,29.865095079],[118.40659586,29.865266402],[118.40659587,29.865266853]],}},{ "type":"Feature","geometry":{"type":"LineString","coordinates":[[118.40719185,29.864449168],[118.40667102,29.864501172],[118.40664725,29.86450368]],}}]
+      };
+
+      var vectorSource = new ol.source.Vector({
+        features: (new ol.format.GeoJSON()).readFeatures(geojsonObject)
+      });
+
+      vectorSource.addFeature(new ol.Feature(new ol.geom.Circle([118.40, 29.86], 1e3)));
+      vectorSource.addFeature(new ol.Feature(new ol.geom.LineString([[118.40, 29.86], [1180.40, 290.86]])));
+
+      var vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: styleFunction
+      });
+
+      var map = new ol.Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
-          }), new ol.layer.Group({
-            layers: [
-              new ol.layer.Tile({
-                source: new ol.source.TileJSON({
-                  url: 'https://api.tiles.mapbox.com/v3/mapbox.20110804-hoa-foodinsecurity-3month.json?secure',
-                  crossOrigin: 'anonymous'
-                })
-              }),
-              new ol.layer.Tile({
-                source: new ol.source.TileJSON({
-                  url: 'https://api.tiles.mapbox.com/v3/mapbox.world-borders-light.json?secure',
-                  crossOrigin: 'anonymous'
-                })
-              })
-            ]
-          })
+          }),
+          vectorLayer
         ],
         target: 'map',
+        controls: ol.control.defaults({
+          attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+            collapsible: false
+          })
+        }),
         view: new ol.View({
-          center: ol.proj.fromLonLat([37.40570, 8.81566]),
-          zoom: 4
+          center: [118.40, 29.86],
+          zoom: 12
         })
       });
 
