@@ -34,7 +34,7 @@ def return_feature_collection(cur):
     
 
     def generate():
-        yield '{ "result": { "type": "FeatureCollection", "features": ['
+        yield '{ "type": "FeatureCollection", "features": ['
         for idx, row in enumerate(cur):
             
             if idx > 0:
@@ -42,7 +42,7 @@ def return_feature_collection(cur):
             yield '{ "type":"Feature","geometry":'
             yield row[0] #json.dumps(row[0])
             yield '}'
-        yield ']}}'
+        yield ']}'
         
     return Response(stream_with_context(generate()), mimetype='application/json')
 
@@ -121,28 +121,35 @@ def load_dlzxc():
     
 @main.route('/getGeom',methods=['GET','POST'])
 def getGeom():
-    left = request.args.get('left')
-    top = request.args.get('top')
-    right = request.args.get('right')
-    bottom = request.args.get('bottom')
-    layerName = request.args.get('layerName') or ''
+    if request.method == 'GET':
+        left = request.args.get('left')
+        top = request.args.get('top')
+        right = request.args.get('right')
+        bottom = request.args.get('bottom')
+        layerName = request.args.get('layerName') or ''
+    
+    if request.method == 'POST':
+        left = request.form.get('left')
+        top = request.form.get('top')
+        right = request.form.get('right')
+        bottom = request.form.get('bottom')
+        layerName = request.form.get('layerName') or ''
     
     tablename = 'g_cloudlayer_meta_'+layerName
     cls = get_table_by_name(tablename)
     
-    if cls is None:
-        return 'no invalid data'
-        
-    #tBoundsText = "ST_GeomFromText('POLYGON( ( %d %d ,%d %d ,%d %d ,%d %d ,%d %d ) )')"%(left,top,right,top,right,bottom,left,bottom,left,top) POLYGON( ( 118.27640380859377 29.806093648481777 ,118.52359619140627 29.806093648481777 ,118.52359619140627 29.913877250518823 ,118.27640380859377 29.913877250518823 ,118.27640380859377 29.806093648481777 ) )
+    
     tBoundsText = 'POLYGON( ( %s %s ,%s %s ,%s %s ,%s %s ,%s %s ) )'%(left,top,right,top,right,bottom,left,bottom,left,top)
     
+    if cls is None:
+        return 'cant find table:%s [%s]'%(tablename,tBoundsText)
+        
     tmptext = func.ST_GeomFromText(tBoundsText,0)
     
     
     
     geodata = db.session.query(func.ST_AsGeoJSON(cls.geomdata)).filter(cls.geomdata.ST_Intersects(tmptext)).all()
-    #return dlzxc[0]
-    #return jsonify(dlzxc)
+    
     return return_feature_collection(geodata)
     
     

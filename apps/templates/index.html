@@ -5,6 +5,7 @@
 <!-- head -->
 {% block head %}
     {{ super() }}
+    
     <link href="{{ url_for('static',filename='assets/ol3/ol.css') }}" rel="stylesheet">
     <link href="{{ url_for('static',filename='css/sample.css') }}" rel="stylesheet">
 {% endblock %}
@@ -16,6 +17,7 @@
     <script src="{{ url_for('static',filename='assets/ol3/ol.js') }} "></script>
     <script src="{{ url_for('static',filename='assets/jquery-2.2.4.min.js') }} "></script>
     <script src="{{ url_for('static',filename='assets/test.js') }} "></script>
+    <script src="{{ url_for('static',filename='assets/ext-all.js') }} "></script>
       
     
     

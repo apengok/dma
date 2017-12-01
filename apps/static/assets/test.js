@@ -70,7 +70,7 @@ var vector_background = new ol.layer.Vector({
 		var topRight = ol.proj.transform(ol.extent.getTopRight(extent),'EPSG:3857', 'EPSG:4326');
 		var bottomLeft = ol.proj.transform(ol.extent.getBottomLeft(extent),'EPSG:3857', 'EPSG:4326');
 		var tUrl = "getGeom?left=" + bottomLeft[0] + '&top=' + bottomLeft[1] +
-   		                    '&right=' + topRight[0] + "&bottom=" + topRight[1]; 
+   		                    '&right=' + topRight[0] + "&bottom=" + topRight[1]+"&layerName=dlzxc"; 
         //var tUrl = "china.json";  							  
 		return tUrl;
 	},
@@ -98,8 +98,8 @@ var map = new ol.Map({
 });
 
 
-//map.addLayer(normal_group)
-map.addLayer(vector_background)
+map.addLayer(normal_group);
+//map.addLayer(vector_background);
 
 var mousePosition = new ol.control.MousePosition({
     coordinateFormat: ol.coordinate.createStringXY(5),
@@ -109,6 +109,7 @@ var mousePosition = new ol.control.MousePosition({
     });
 
 map.addControl(mousePosition);
+
 
 ol.layer.SXZDT = function(opt_options) {
 	
@@ -226,7 +227,7 @@ ol.layer.SXZDT.prototype.refreshSource_ = function(e) {
 						var features = (new ol.format.GeoJSON()).readFeatures(geojsonObject.featureCollection);
 						this_.source_.clear(true);
 						this_.source_.addFeatures(features);
-						this_.dimTexts = geojsonObject.dimTexts;
+						//this_.dimTexts = geojsonObject.dimTexts;
 					}
 				});
 				this.setVisible(true);
@@ -245,4 +246,11 @@ var dlzxc_layer = new ol.layer.SXZDT({
 	minZoom : 13
 });
 
-map.addLayer(dlzxc_layer);
+var layers1 = new ol.Collection();
+layers1.push(dlzxc_layer);
+
+var layer_group = new ol.layer.Group({
+    layers:layers1
+});
+map.addLayer(layer_group);
+dlzxc_layer.setMap(map);
