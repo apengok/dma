@@ -69,7 +69,7 @@ var vector_background = new ol.layer.Vector({
     url: function(extent, resolution, projection){
 		var topRight = ol.proj.transform(ol.extent.getTopRight(extent),'EPSG:3857', 'EPSG:4326');
 		var bottomLeft = ol.proj.transform(ol.extent.getBottomLeft(extent),'EPSG:3857', 'EPSG:4326');
-		var tUrl = "getGeom?left=" + bottomLeft[0] + '&top=' + bottomLeft[1] +
+		var tUrl = "/map/getGeom?left=" + bottomLeft[0] + '&top=' + bottomLeft[1] +
    		                    '&right=' + topRight[0] + "&bottom=" + topRight[1]+"&layerName=dlzxc"; 
         //var tUrl = "china.json";  							  
 		return tUrl;
@@ -99,7 +99,7 @@ var map = new ol.Map({
 
 
 map.addLayer(normal_group);
-//map.addLayer(vector_background);
+map.addLayer(vector_background);
 
 var mousePosition = new ol.control.MousePosition({
     coordinateFormat: ol.coordinate.createStringXY(5),
@@ -109,6 +109,7 @@ var mousePosition = new ol.control.MousePosition({
     });
 
 map.addControl(mousePosition);
+
 
 
 ol.layer.SXZDT = function(opt_options) {
@@ -134,7 +135,22 @@ ol.layer.SXZDT = function(opt_options) {
 		})
 	});
 	
-	this.dimTexts = null;
+	var myExtent = map.getView().calculateExtent(map.getSize());
+    var bottomLeft = ol.proj.transform(ol.extent.getBottomLeft(myExtent),'EPSG:3857', 'EPSG:4326');
+    var topRight = ol.proj.transform(ol.extent.getTopRight(myExtent),'EPSG:3857', 'EPSG:4326');
+    
+    $.ajax({
+        url: '/map/getGeom',
+        data: "left=" + bottomLeft[0] + "&top=" + bottomLeft[1] + "&right=" + topRight[0] + "&bottom=" + topRight[1] + "&layerName="+this_.layerName_,
+        type: 'POST',
+        success: function(res){
+            //var geojsonObject = Ext.util.JSON.decode(res);
+            var features = (new ol.format.GeoJSON()).readFeatures(res);
+            this_.source_.clear(true);
+            this_.source_.addFeatures(features);
+            //this_.dimTexts = geojsonObject.dimTexts;
+        }
+    });
 	
 }
 ol.inherits(ol.layer.SXZDT, ol.layer.Vector);
@@ -145,50 +161,7 @@ ol.layer.SXZDT.prototype.setMap = function(map) {
 		map.on('moveend',function(e){
               this_.refreshSource_(e);
 		});
-		//层的标注
-		// this_.on('postcompose', function(e){
-			    // if(!this.visible)
-					// return;
-			    // if(!this.dimTexts)
-					// return;
-			    // var ctx = e.context;
-				// ctx.font = "30px";
-				// ctx.fillStyle = "#7F7F7F";
-				// var scale = 1;
-				// var current_zoom = map.getView().getZoom();
-				// for(var i=0; i<this.dimTexts.length; i++) {
-					// var object = this.dimTexts[i];
-					// var text = object.text;
-					// var coords = object.coordinates;
-					//文字标注
-					// if(object.type == "Dot" || object.type == "Point") {
-					   // ol.Utils.drawLabelText(object.text, coords.coordinates[0], coords.coordinates[1], 5, ctx, scale);
-					// }
-				    // else{  
-					   //折线标注
-					   // var center = parseInt(coords.coordinates.length / 2);
-					   // var tp1 = ol.proj.fromLonLat([coords.coordinates[0][0],coords.coordinates[0][1]]);
-					   // var tp2 = ol.proj.fromLonLat([coords.coordinates[coords.coordinates.length-1][0],coords.coordinates[coords.coordinates.length-1][1]]);
-					   // var p1 = map.getPixelFromCoordinate(tp1);
-					   // var p2 = map.getPixelFromCoordinate(tp2);
-					   // var px1, py1, px2, py2;
-					   // px1 = p1[0], py1 = p1[1];
-					   // px2 = p2[0], py2 = p2[1];
-					   // var length = ol.Utils.distancePointToPoint(px1, py1, px2, py2);
-							
-					   // var textWidth = ctx.measureText(text).width;
-					   // if(length >= textWidth) {
-							// p1 = [coords.coordinates[center-1][0],coords.coordinates[center-1][1]];
-							// p2 = [coords.coordinates[center][0],coords.coordinates[center][1]];
-							// px1 = p1[0], py1 = p1[1];
-							// px2 = p2[0], py2 = p2[1];
-							// var offset = -4;
-							// ol.Utils.drawLineLabelText(text, textWidth, px1, py1, px2, py2, offset, ctx);
-						// }
-					  
-					// }	
-				// }
-		// })
+		
 };
 
 ol.layer.SXZDT.prototype.refreshSource_ = function(e) {
@@ -223,8 +196,8 @@ ol.layer.SXZDT.prototype.refreshSource_ = function(e) {
 					data: "left=" + bottomLeft[0] + "&top=" + bottomLeft[1] + "&right=" + topRight[0] + "&bottom=" + topRight[1] + "&layerName="+this_.layerName_,
 					type: 'POST',
 					success: function(res){
-						var geojsonObject = Ext.util.JSON.decode(res);
-						var features = (new ol.format.GeoJSON()).readFeatures(geojsonObject.featureCollection);
+						//var geojsonObject = Ext.util.JSON.decode(res);
+						var features = (new ol.format.GeoJSON()).readFeatures(res);
 						this_.source_.clear(true);
 						this_.source_.addFeatures(features);
 						//this_.dimTexts = geojsonObject.dimTexts;
@@ -253,4 +226,4 @@ var layer_group = new ol.layer.Group({
     layers:layers1
 });
 map.addLayer(layer_group);
-dlzxc_layer.setMap(map);
+//dlzxc_layer.setMap(map);

@@ -6,6 +6,7 @@
 {% block head %}
     {{ super() }}
     <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href={{ url_for('static',filename='favicon.ico') }}"  type="image/x-icon" >
 {% endblock %}
 
 <!-- nav bar -->
@@ -19,13 +20,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Homepage</a>
+          <a class="navbar-brand" href="{{ url_for('main.wbalance') }}">Homepage</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('main.wbalance') }}">水平衡分析</a></li>
+            <li><a href="{{ url_for('main.wbalance') }}">水平衡分析</a></li>	
             <li><a href="{{ url_for('main.wstasitc') }}">水量统计报表</a></li>
-            <li><a href="{{ url_for('main.wdma') }}">分区管理</a></li>
+            <li><a href="{{ url_for('main.economize') }}">节能水平分析</a></li>
+            <li><a href="{{ url_for('main.wstasitc') }}">substitu</a></li>
+            <li><a href="{{ url_for('mapis.index') }}">地图</a></li>
           </ul>{#
           <ul class="nav navbar-nav navbar-right">
             

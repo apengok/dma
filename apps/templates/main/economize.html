@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}DMA |economize {{ title }}{% endblock %}
+
+<!-- head -->
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static',filename='css/wbalance.css') }}" rel="stylesheet">
+
+<style type="text/css">    
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    
+    <div class="container" >
+    
+    
+        
+        
+        <aside class="col-sm-2 ml-sm-auto blog-sidebar">
+          
+          <div class="sidebar-module">
+            <h4>节能水平分析</h4>
+            <ol class="list-unstyled">
+            
+              <li><a href="#">能耗水平评价</a></li>
+              <li><a href="#">水泵效率评价</a></li>
+            
+            </ol>
+          </div>
+          
+        </aside><!-- /.blog-sidebar -->
+        
+        <div class="col-xs-7">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="tophead">
+                        <h2>能耗水平评价</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">一级泵站</th>
+                  <th scope="col">二级泵站</th>
+                  <th scope="col">合计</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">日供水量(万吨)</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">日耗电量（度）</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">供水扬程（Mpa）</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">千吨水耗电量（度/千吨）</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                
+              </tbody>
+            </table>
+            
+        </div>    
+        
+        
+            
+        </div>
+        
+
+    </div>
+    
+    
+{% endblock %}

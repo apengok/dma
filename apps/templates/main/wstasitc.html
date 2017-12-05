@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}DMA |wstatic {{ title }}{% endblock %}
+
+<!-- head -->
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static',filename='css/wbalance.css') }}" rel="stylesheet">
+
+<style type="text/css">    
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    
+    <div class="container" >
+    
+    
+        
+        
+        <aside class="col-sm-2 ml-sm-auto blog-sidebar">
+          
+          <div class="sidebar-module">
+            <h4>Monthly</h4>
+            <ol class="list-unstyled">
+            {% for mon in month_group %}
+              <li><a href="{{ url_for('main.wbalance_mon',mon=mon) }}">{{ mon }}</a></li>
+              
+            {% endfor %}
+            </ol>
+          </div>
+          
+        </aside><!-- /.blog-sidebar -->
+        
+        <div class="col-xs-7">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="tophead">
+                        <h2>集团水量统计 {{ current_mon }}月报表</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">序号</th>
+                  <th scope="col">项目</th>
+                  <th scope="col">上月止累计</th>
+                  <th scope="col">当月</th>
+                  <th scope="col">本月止累计</th>
+                  <th scope="col">说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>1、供水总量</td>
+                  <td></td>
+                  <td>{{ balance.totoal_in }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;其中：1.1 自产供水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 外购供水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>2、注册用户用水量(有效供水量)</td>
+                  <td></td>
+                  <td>{{ balance.auth_use }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>2.1 计费用水量(售水量)</td>
+                  <td></td>
+                  <td>{{ balance.charge_auth }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td>2.1.1 计费计量用水量</td>
+                  <td></td>
+                  <td>{{ balance.charge_measure }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>2.1.1.1 居民用水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">8</th>
+                  <td>其中:抄表到户的居民用水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">9</th>
+                  <td>未抄表到户的居民用水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">10</th>
+                  <td>2.1.1.2 非居民用水量(含特殊行业)</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">11</th>
+                  <td>其中:高精度水表用水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">12</th>
+                  <td>其他类型水表用水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">13</th>
+                  <td>2.1.2 计费未计量用水量</td>
+                  <td></td>
+                  <td>{{ balance.charge_unmeasure }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">14</th>
+                  <td>其中:新建管线冲洗水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">15</th>
+                  <td>管网改造冲洗水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">16</th>
+                  <td>应急供水车水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">17</th>
+                  <td>工程漏水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">18</th>
+                  <td>2.2免费用水量</td>
+                  <td></td>
+                  <td>{{ balance.uncharge_auth }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">19</th>
+                  <td>2.2.1免费计量用水量</td>
+                  <td></td>
+                  <td>{{ balance.uncharge_measure }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">20</th>
+                  <td>2.2.2免费未计量用水量</td>
+                  <td></td>
+                  <td>{{ balance.uncharge_unmeasure }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">21</th>
+                  <td>其中消防用水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">22</th>
+                  <td>新建管线冲洗水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">23</th>
+                  <td>管网改造冲洗水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">24</th>
+                  <td>管网维护用水量</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">25</th>
+                  <td>3、漏损水量</td>
+                  <td></td>
+                  <td>{{ balance.loss }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">26</th>
+                  <td>漏损率(%)</td>
+                  <td></td>
+                  <td>{{ balance.loss / balance.totoal_in}}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">27</th>
+                  <td>4、产销差水量</td>
+                  <td></td>
+                  <td>{{ balance.totoal_in - balance.money_back }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">28</th>
+                  <td>产销差率</td>
+                  <td></td>
+                  <td>{{ (balance.totoal_in - balance.money_back)/balance.totoal_in}}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                
+                
+              </tbody>
+            </table>
+            
+        </div>    
+        
+        
+            
+        </div>
+        <aside class="col-sm-3 ml-sm-auto blog-sidebar">
+          
+          <div class="sidebar-module">
+            <span>
+            <br><br><br><br>
+            常用的漏损评价的指标主要有：<br>
+            （1）漏失率（%）=Q漏失量/Q供水量；<br>
+            （2）产销差率（%）=（ Q供水量- Q售水量）/ Q供水量；<br>
+            （3）单位管长漏失量（m³/km/h）= Q漏失量/∑L配水管总长；<br>
+            （4）基础设施漏失指数（ILI）=当前物理损失水量/不可避免物理损失水量。<br>
+            不可避免物理损失水量(L/d)=（18•Lm+0.8•Nc+25•Lp）•P <br>
+            式中——Lm：主干管长度（Km）； Nc：接户数；Lp：用户连接管总长度（Km）； P：管网平均压力（m）。
+
+            </span>
+          </div>
+          
+        </aside><!-- /.blog-sidebar -->
+
+    </div>
+    
+    
+{% endblock %}
