@@ -22,7 +22,7 @@ from main import main as main_blueprint
 app.register_blueprint(main_blueprint)  #,url_prefix='/main'
 
 from map import mapis as map_blueprint
-app.register_blueprint(map_blueprint)
+app.register_blueprint(map_blueprint,url_prefix='/map')
     
 # login_manager = LoginManager()
 # login_manager.session_protection='strong'

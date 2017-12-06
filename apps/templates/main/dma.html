@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block title %}DMA |economize {{ title }}{% endblock %}
+
+<!-- head -->
+{% block head %}
+    {{ super() }}
+    <meta charset="utf-8">
+    <link href="{{ url_for('static',filename='css/wbalance.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/bootstrap-treeview.min.css') }}" rel="stylesheet">
+
+<style type="text/css">    
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    
+    <div class="container" >
+    
+    
+        
+        
+        <aside class="col-sm-3 ml-sm-auto blog-sidebar">
+          
+           <div id="treeview1" class=""></div>
+          
+        </aside><!-- /.blog-sidebar -->
+        
+        <div class="col-xs-7">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="tophead">
+                        <h2>分区资料</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">资料</th>
+                  <th scope="col">数据</th>
+                  <th scope="col">备注</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>分区名称</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>分区面积（平方公里）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>分区进水量（ m3）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>注册用户总数（万户）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>管线长度（ km）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td>下一级分区数量（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>分区中 DMA 数量（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>分区名称</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>分区面积（平方公里）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>分区进水量（ m3）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>注册用户总数（万户）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>管线长度（ km）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td>下一级分区数量（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>分区中 DMA 数量（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">8</th>
+                  <td>水表抄见率（ %）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">9</th>
+                  <td>抄表准确率（ %）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">10</th>
+                  <td>分区销售水量（ m3）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">11</th>
+                  <td>夜间最小流量（ m3）</td>
+                  <td></td>
+                  <td>仅适用于 DMA</td>
+                </tr>
+                <tr>
+                  <th scope="row">12</th>
+                  <td>在线压力点数量（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">13</th>
+                  <td>在线流量计数量（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">14</th>
+                  <td>在线水质监测点数量（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">15</th>
+                  <td>收费用远传水表数量（只）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">16</th>
+                  <td>收费用远传水表水量占分区销
+水量比（ %）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">17</th>
+                  <td>分区探出漏点总数（个）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">18</th>
+                  <td>漏失水量（ m3）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">19</th>
+                  <td>暗漏水量（ m3）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">20</th>
+                  <td>明漏水量（ m3）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">21</th>
+                  <td>漏损率（ %）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">22</th>
+                  <td>压力合格率（ %）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">23</th>
+                  <td>水质合格率（ %）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">24</th>
+                  <td>分区内压力（ MPa）</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                
+              </tbody>
+            </table>
+            
+        </div>    
+        
+        
+            
+        </div>
+        
+
+    </div>
+    <script src="{{ url_for('static',filename='assets/jquery-2.2.4.min.js') }} "></script>
+    <script src="{{ url_for('static',filename='assets/bootstrap-treeview.min.js') }} "></script>
+    
+    <script type="text/javascript">
+    
+    
+        var defaultData = [
+          {
+            text: '分区管理',
+            href: '#',
+            tags: ['4'],
+            nodes: [
+              {
+                text: '某市(一级分区)',
+                href: '#',
+                tags: ['2'],
+                nodes: [
+                  {
+                    text: '南区(二级分区)',
+                    href: '#',
+                    tags: ['0'],
+                    nodes:[
+                        {
+                            text:'DMA1',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA2',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA3',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA4',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA5',
+                            href:'#',
+                            tags:['0']
+                        }
+                    ]
+                  },
+                  {
+                    text: '北区(二级分区)',
+                    href: '#grandchild2',
+                    tags: ['0'],
+                    nodes:[
+                        {
+                            text:'DMA6',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA7',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA8',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA9',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA10',
+                            href:'#',
+                            tags:['0']
+                        }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            text: '汇总资料',
+            href: "{{ url_for('main.dma_summary')}}",
+            tags: ['0']
+          },
+          
+        ];
+        
+        $('#treeview1').treeview({
+            enableLinks: true,
+          data: defaultData
+        });
+        
+    
+    
+    </script>
+    
+{% endblock %}

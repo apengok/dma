@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}DMA |economize {{ title }}{% endblock %}
+
+<!-- head -->
+{% block head %}
+    {{ super() }}
+    <meta charset="utf-8">
+    <link href="{{ url_for('static',filename='css/wbalance.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/bootstrap-treeview.min.css') }}" rel="stylesheet">
+
+<style type="text/css">    
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    
+    <div class="container" >
+    
+    
+        
+        
+        <aside class="col-sm-3 ml-sm-auto blog-sidebar">
+          
+           <div id="treeview1" class=""></div>
+          
+        </aside><!-- /.blog-sidebar -->
+        
+        <div class="col-xs-7">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="tophead">
+                        <h2>汇总资料</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">资料</th>
+                  <th scope="col">数据</th>
+                  <th scope="col">备注</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+              {% for idx,summary in summary_content %}
+                <tr>
+                  <th scope="row">{{ idx + 1 }}</th>
+                  <td>{{ summary.decode('utf-8') }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                
+              {% endfor %}
+                
+              </tbody>
+            </table>
+            
+        </div>    
+        
+        
+            
+        </div>
+        
+
+    </div>
+    <script src="{{ url_for('static',filename='assets/jquery-2.2.4.min.js') }} "></script>
+    <script src="{{ url_for('static',filename='assets/bootstrap-treeview.min.js') }} "></script>
+    
+    <script type="text/javascript">
+    
+    
+        var defaultData = [
+          {
+            text: '分区管理',
+            href: '#',
+            tags: ['4'],
+            nodes: [
+              {
+                text: '某市(一级分区)',
+                href: '#',
+                tags: ['2'],
+                nodes: [
+                  {
+                    text: '南区(二级分区)',
+                    href: '#',
+                    tags: ['0'],
+                    nodes:[
+                        {
+                            text:'DMA1',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA2',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA3',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA4',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA5',
+                            href:'#',
+                            tags:['0']
+                        }
+                    ]
+                  },
+                  {
+                    text: '北区(二级分区)',
+                    href: '#grandchild2',
+                    tags: ['0'],
+                    nodes:[
+                        {
+                            text:'DMA6',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA7',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA8',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA9',
+                            href:'#',
+                            tags:['0']
+                        },
+                        {
+                            text:'DMA10',
+                            href:'#',
+                            tags:['0']
+                        }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            text: '汇总资料',
+            href: '#',
+            tags: ['0']
+          },
+          
+        ];
+        
+        $('#treeview1').treeview({
+          data: defaultData
+        });
+        
+    
+    
+    </script>
+    
+{% endblock %}

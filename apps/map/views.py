@@ -21,7 +21,7 @@ def return_feature_collection2(cur):
         for idx, row in enumerate(cur):
             if idx > 0:
                 yield ','
-            yield row[0] #json.dumps(row[0])
+            yield row[0] 
         yield ']}}'
         
     return Response(stream_with_context(generate()), mimetype='application/json')
@@ -58,7 +58,7 @@ def get_table_by_name(tablename):
     
     return cls
     
-@mapis.route('/map/')
+@mapis.route('/')
 def index():
     
     return render_template('map/index.html')
@@ -119,7 +119,7 @@ def load_dlzxc():
     
     return render_template('index_gjson.html')
     
-@mapis.route('/map/getGeom',methods=['GET','POST'])
+@mapis.route('/getGeom',methods=['GET','POST'])
 def getGeom():
     if request.method == 'GET':
         left = request.args.get('left')
