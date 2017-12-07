@@ -49,12 +49,12 @@
                 </tr>
               </thead>
               <tbody>
-              {% for idx,summary in summary_content %}
+              {% for summary in summary_content %}
                 <tr>
-                  <th scope="row">{{ idx + 1 }}</th>
-                  <td>{{ summary.decode('utf-8') }}</td>
-                  <td></td>
-                  <td></td>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td>{{ summary_content[summary].get('name').decode('utf-8') }}</td>
+                  <td>{{ summary_content[summary].get('value') }}</td>
+                  <td>{{ summary_content[summary].get('note').decode('utf-8') }}</td>
                 </tr>
                 
               {% endfor %}
@@ -76,95 +76,9 @@
     <script type="text/javascript">
     
     
-        var defaultData = [
-          {
-            text: '分区管理',
-            href: '#',
-            tags: ['4'],
-            nodes: [
-              {
-                text: '某市(一级分区)',
-                href: '#',
-                tags: ['2'],
-                nodes: [
-                  {
-                    text: '南区(二级分区)',
-                    href: '#',
-                    tags: ['0'],
-                    nodes:[
-                        {
-                            text:'DMA1',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA2',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA3',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA4',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA5',
-                            href:'#',
-                            tags:['0']
-                        }
-                    ]
-                  },
-                  {
-                    text: '北区(二级分区)',
-                    href: '#grandchild2',
-                    tags: ['0'],
-                    nodes:[
-                        {
-                            text:'DMA6',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA7',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA8',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA9',
-                            href:'#',
-                            tags:['0']
-                        },
-                        {
-                            text:'DMA10',
-                            href:'#',
-                            tags:['0']
-                        }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            text: '汇总资料',
-            href: '#',
-            tags: ['0']
-          },
-          
-        ];
         
         $('#treeview1').treeview({
-          data: defaultData
+          data: {{ json_data|tojson|safe }}
         });
         
     
