@@ -6,7 +6,7 @@
 {% block head %}
     {{ super() }}
     <meta charset="utf-8">
-    <link href="{{ url_for('static',filename='css/wbalance.css') }}" rel="stylesheet">
+    
     <link href="{{ url_for('static',filename='css/bootstrap-treeview.min.css') }}" rel="stylesheet">
 
 <style type="text/css">    
@@ -16,7 +16,7 @@
 
 {% block content %}
 
-
+    {{ super() }}
     
     <div class="container" >
     
@@ -78,7 +78,8 @@
     
         
         $('#treeview1').treeview({
-          data: {{ json_data|tojson|safe }}
+            enableLinks: true,
+            data: {{ json_data|tojson|safe }}
         });
         
     

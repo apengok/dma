@@ -6,7 +6,7 @@
 {% block head %}
     {{ super() }}
     <meta charset="utf-8">
-    <link href="{{ url_for('static',filename='css/wbalance.css') }}" rel="stylesheet">
+    
     <link href="{{ url_for('static',filename='css/bootstrap-treeview.min.css') }}" rel="stylesheet">
 
 <style type="text/css">    
@@ -19,14 +19,14 @@
 
     
     <div class="container" >
-    
+    {{ super() }}
     
         
         
         <aside class="col-sm-3 ml-sm-auto blog-sidebar">
           
            <div id="treeview1" class=""></div>
-          
+           
         </aside><!-- /.blog-sidebar -->
         
         <div class="col-xs-7">
@@ -83,7 +83,7 @@
         enableLinks: true,
       data: {{ json_data|tojson|safe }}
     });
-        
+    
     
     </script>
     
